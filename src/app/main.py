@@ -1,10 +1,10 @@
 import uvicorn
 from fastapi import FastAPI
 
-from src.app.api import create_api, ping
-from src.app.db import database, engine, metadata
-# from app.api import create_api, ping
-# from app.db import database, engine, metadata
+# from src.app.api import create_api, ping
+# from src.app.db import database, engine, metadata
+from app.api import create_api, ping
+from app.db import database, engine, metadata
 
 
 # Create all tables stored in this metadata.
