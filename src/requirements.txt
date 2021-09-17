@@ -4,8 +4,8 @@ fastapi==0.63.0
 psycopg2-binary==2.8.6
 SQLAlchemy==1.3.24
 uvicorn==0.13.4
-mysqlclient
-aiomysql
+mysqlclient==2.0.3
+aiomysql==0.0.21
 
 # dev
 pytest==6.2.3
