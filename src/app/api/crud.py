@@ -1,7 +1,7 @@
-# from src.app.api.models import TenantSchema
-# from src.app.db import tenants, database
-from app.api.models import TenantSchema
-from app.db import tenants, database
+from src.app.api.models import TenantSchema
+from src.app.db import tenants, database
+# from app.api.models import TenantSchema
+# from app.db import tenants, database
 
 
 async def post(payload: TenantSchema, pri_key: str):

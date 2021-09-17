@@ -3,12 +3,12 @@ import requests
 from typing import List
 from fastapi import APIRouter, HTTPException, Path
 
-# from src.app.api import crud
-# from src.app import settings
-# from src.app.api.models import TenantDB, TenantSchema
-from app.api import crud
-from app import settings
-from app.api.models import TenantDB, TenantSchema
+from src.app.api import crud
+from src.app import settings
+from src.app.api.models import TenantDB, TenantSchema
+# from app.api import crud
+# from app import settings
+# from app.api.models import TenantDB, TenantSchema
 
 router = APIRouter()
 logging.getLogger().setLevel("INFO")
@@ -26,6 +26,7 @@ async def create_note(payload: TenantSchema):
     return response_object
 
 
+# @router.post("/api/tenantResourceApply/tenants/{tenantId}/services", response_model=TenantDB)
 @router.post("/api/tenantResourceApply/tenants/{tenantId}/services")
 async def create_order(request: TenantSchema, tenantId: str):
     body = request
@@ -40,7 +41,6 @@ async def create_order(request: TenantSchema, tenantId: str):
 
     except Exception as e:
         print(str(e))
-
     return resource
 
 
@@ -48,7 +48,7 @@ async def on_resource_apply(tenant):
     """
     Entry point for resource application
     """
-    resource = ""
+    resource = "type error!"
     if tenant["type"] == 'cms':
         resource = await on_cms_apply(tenant)
         pass
@@ -135,11 +135,10 @@ async def on_cms_apply(tenant):
     }]
 
     resp['resources'] = resources
-    resp = requests.post(tenant['callback'], json=resp, timeout=10)
+    response = requests.post(tenant['callback'], json=resp, timeout=10)
     logging.info(
         'call iam-service-management for CMS resource application, resp status: %s',
-        resp.status_code)
-    # print(resp.status_code)
+        response.status_code)
     return resp
 
 
@@ -198,8 +197,11 @@ async def on_otds_apply(tenant):
         "accessKey": shared_redis_key,
     }]
     resp['resources'] = resources
+    print(resp)
 
-    resp = requests.post(tenant['callback'], json=resp, timeout=10)
+    response = requests.post(tenant['callback'], json=resp, timeout=10)
     logging.info(
         'call iam-service-management for OTDS resource application, resp status: %s',
-        resp.status_code)
+        response.status_code)
+    return resp
+
