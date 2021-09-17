@@ -14,7 +14,7 @@ COPY ./requirements.txt /usr/src/app/requirements.txt
 # install dependencies
 RUN set -eux \
     && pip install --upgrade pip setuptools wheel \
-    && pip install -r /usr/src/app/requirements.txt \
+    && pip install -r /usr/src/app/requirements.txt -i http://pypi.douban.com/simple --trusted-host pypi.douban.com\
     && rm -rf /root/.cache/pip
 
 # copy project
