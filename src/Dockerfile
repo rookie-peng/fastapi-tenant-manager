@@ -13,6 +13,7 @@ COPY ./requirements.txt /usr/src/app/requirements.txt
 
 # install dependencies
 RUN set -eux \
+    && apt-get install libmysqlclient-dev
     && pip install --upgrade pip setuptools wheel \
     && pip install -r /usr/src/app/requirements.txt -i http://pypi.douban.com/simple --trusted-host pypi.douban.com\
     && rm -rf /root/.cache/pip
