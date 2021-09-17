@@ -36,26 +36,28 @@ async def create_order(request: TenantSchema, tenantId: str):
     await crud.post(body, pri_key)
 
     try:
-        await on_resource_apply(res)
+        resource = await on_resource_apply(res)
 
     except Exception as e:
         print(str(e))
 
-    return res
+    return resource
 
 
 async def on_resource_apply(tenant):
     """
     Entry point for resource application
     """
+    resource = ""
     if tenant["type"] == 'cms':
-        await on_cms_apply(tenant)
+        resource = await on_cms_apply(tenant)
         pass
     elif tenant["type"] == 'otds':
-        await on_otds_apply(tenant)
+        resource = await on_otds_apply(tenant)
         pass
     else:
         logging.warn('Unsupported Resource Type: %s', tenant["type"])
+    return resource
 
 
 async def on_cms_apply(tenant):
