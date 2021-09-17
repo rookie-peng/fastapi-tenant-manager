@@ -24,5 +24,5 @@ app.include_router(ping.router)
 app.include_router(create_api.router, prefix="/devops-workorder", tags=["tenants"])
 
 
-if __name__ == '__main__':
-    uvicorn.run(app='main:app', host="127.0.0.1", port=9000, reload=True, debug=True)
+# if __name__ == '__main__':
+#     uvicorn.run(app='main:app', host="127.0.0.1", port=9000, reload=True, debug=True)
