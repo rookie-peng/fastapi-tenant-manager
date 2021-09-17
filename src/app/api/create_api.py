@@ -26,7 +26,7 @@ async def create_note(payload: TenantSchema):
     return response_object
 
 
-@router.post("/api/tenantResourceApply/tenants/{tenantId}/services", response_model=TenantDB)
+@router.post("/api/tenantResourceApply/tenants/{tenantId}/services")
 async def create_order(request: TenantSchema, tenantId: str):
     body = request
     pri_key = tenantId
