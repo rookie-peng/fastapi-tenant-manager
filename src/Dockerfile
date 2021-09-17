@@ -1,5 +1,6 @@
 # pull official base image
-FROM python:3.9.4-alpine
+# FROM python:3.9.4-alpine
+FROM registry.rootcloud.com/rootcloud-platform/tenant-manager:base
 
 # set work directory
 WORKDIR /usr/src/app
@@ -13,7 +14,6 @@ COPY ./requirements.txt /usr/src/app/requirements.txt
 
 # install dependencies
 RUN set -eux \
-    && apk add  libmysqlclient-dev \
     && pip install --upgrade pip setuptools wheel \
     && pip install -r /usr/src/app/requirements.txt -i http://pypi.douban.com/simple --trusted-host pypi.douban.com\
     && rm -rf /root/.cache/pip
