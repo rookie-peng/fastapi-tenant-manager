@@ -3,9 +3,12 @@ import requests
 from typing import List
 from fastapi import APIRouter, HTTPException, Path
 
-from src.app.api import crud
-from src.app import settings
-from src.app.api.models import TenantDB, TenantSchema
+# from src.app.api import crud
+# from src.app import settings
+# from src.app.api.models import TenantDB, TenantSchema
+from app.api import crud
+from app import settings
+from app.api.models import TenantDB, TenantSchema
 
 router = APIRouter()
 logging.getLogger().setLevel("INFO")
