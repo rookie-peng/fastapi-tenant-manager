@@ -3,7 +3,7 @@ from fastapi import FastAPI
 
 # from src.app.api import create_api, ping
 # from src.app.db import database, engine, metadata
-from app.api import create_api, ping
+from app.api import create_api, ping, login_api
 from app.db import database, engine, metadata
 
 
@@ -24,6 +24,7 @@ async def shutdown():
 
 
 app.include_router(ping.router)
+app.include_router(login_api.router)
 app.include_router(create_api.router, prefix="/devops-workorder", tags=["tenants"])
 
 

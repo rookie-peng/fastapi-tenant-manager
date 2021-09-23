@@ -185,6 +185,7 @@ async def on_otds_apply(tenant):
         "hiveUrl": shared_hive,
         "version": "3.1.0"
     }, {
+
         "mode": "cluster",
         "eachNodeCores": 0,
         "nodeNum": 3,
