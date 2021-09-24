@@ -12,3 +12,8 @@ class TenantSchema(BaseModel):
 class TenantDB(TenantSchema):
     tenant_id: str = Field(..., min_length=1, max_length=50)
 
+
+class User(BaseModel):
+    userAccount: str = Field(..., min_length=1, max_length=50)
+    userPasswd: str = Field(..., min_length=1, max_length=50)
+
