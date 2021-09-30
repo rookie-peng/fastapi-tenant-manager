@@ -23,7 +23,7 @@ tenants = Table(
     "tenants",
     metadata,
     Column("tenant_id", String(50), primary_key=True),
-    Column("callback", String(100)),
+    Column("callback", String(500)),
     Column("tier", String(50)),
     Column("type", String(50)),
     Column("project_code", String(50)),
