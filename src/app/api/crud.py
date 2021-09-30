@@ -5,7 +5,7 @@ from app.db import tenants, database
 
 
 async def post(payload: TenantSchema, pri_key: str):
-    query = tenants.insert().values(tenant_id=pri_key, callback=payload.callback, tier=payload.tier, type=payload.type, project_code=payload.project_code, project_name=payload.project_name)
+    query = tenants.insert().values(tenant_id=pri_key, callback=payload.callback, tier=payload.tier, type=payload.type, project_code=payload.projectCode, project_name=payload.projectName)
     return await database.execute(query=query)
 
 

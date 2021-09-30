@@ -2,11 +2,11 @@ from pydantic import BaseModel, Field
 
 
 class TenantSchema(BaseModel):
-    callback: str = Field(..., min_length=10, max_length=100)
+    callback: str = Field(..., min_length=10, max_length=200)
     tier: str = Field(..., min_length=1, max_length=50)
     type: str = Field(..., min_length=1, max_length=50)
-    project_code: str = Field(..., min_length=1, max_length=50)
-    project_name: str = Field(..., min_length=1, max_length=50)
+    projectCode: str = Field(..., min_length=1, max_length=50)
+    projectName: str = Field(..., min_length=1, max_length=50)
 
 
 class TenantDB(TenantSchema):
