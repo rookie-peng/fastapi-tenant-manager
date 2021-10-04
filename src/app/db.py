@@ -22,7 +22,9 @@ metadata = MetaData()
 tenants = Table(
     "tenants",
     metadata,
-    Column("tenant_id", String(50), primary_key=True),
+    # Column("tenant_id", String(50), primary_key=True),
+    Column("id", Integer, primary_key=True),
+    Column("tenant_id", String(50)),
     Column("callback", String(500)),
     Column("tier", String(50)),
     Column("type", String(50)),
