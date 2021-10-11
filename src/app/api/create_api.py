@@ -67,8 +67,9 @@ async def on_cms_apply(tenant):
     resp = {}
     resp['tenant'] = tenant
     # 假设全部成功
-    resp['status'] = 0
-    resp['statusDesc'] = '创建成功'
+    resp['code'] = 0
+    resp['msg'] = '创建成功'
+    resp['flag'] = True
 
     tier = tenant['tier']
 
@@ -134,7 +135,7 @@ async def on_cms_apply(tenant):
         "emqServerUrl": shared_emq,
     }]
 
-    resp['resources'] = resources
+    resp['data'] = resources
     response = requests.post(tenant['callback'], json=resp, timeout=10)
     logging.info(
         'call iam-service-management for CMS resource application, resp status: %s',
@@ -149,8 +150,9 @@ async def on_otds_apply(tenant):
     resp = {}
     resp['tenant'] = tenant
     # 假设全部成功
-    resp['status'] = 0
-    resp['statusDesc'] = '创建成功'
+    resp['code'] = 0
+    resp['msg'] = '创建成功'
+    resp['flag'] = True
     tier = tenant['tier']
 
     shared_mongo = settings.TENANT_SHARED_RESOURCE_MONGO
@@ -197,7 +199,7 @@ async def on_otds_apply(tenant):
         "accessUrl": shared_redis_url,
         "accessKey": shared_redis_key,
     }]
-    resp['resources'] = resources
+    resp['data'] = resources
     print(resp)
 
     response = requests.post(tenant['callback'], json=resp, timeout=10)
