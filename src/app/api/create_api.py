@@ -139,7 +139,7 @@ async def on_cms_apply(tenant):
     callback_body = tenant
     callback_body["resources"] = resources
     callback_body["status"] = 0
-    print(callback_body)
+    print("---------------------", callback_body)
 
     response = requests.post(tenant['callback'], data=callback_body, timeout=10)
     logging.info(
@@ -208,6 +208,7 @@ async def on_otds_apply(tenant):
     callback_body = tenant
     callback_body["resources"] = resources
     callback_body["status"] = 0
+    print("---------------------", callback_body)
 
     response = requests.post(tenant['callback'], data=callback_body, timeout=10)
     logging.info(
