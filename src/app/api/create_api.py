@@ -139,8 +139,9 @@ async def on_cms_apply(tenant):
     callback_body = tenant
     callback_body["resources"] = resources
     callback_body["status"] = 0
+    print(callback_body)
 
-    response = requests.post(tenant['callback'], json=callback_body, timeout=10)
+    response = requests.post(tenant['callback'], data=callback_body, timeout=10)
     logging.info(
         'call iam-service-management for CMS resource application, resp status: %s',
         response.status_code)
@@ -208,7 +209,7 @@ async def on_otds_apply(tenant):
     callback_body["resources"] = resources
     callback_body["status"] = 0
 
-    response = requests.post(tenant['callback'], json=callback_body, timeout=10)
+    response = requests.post(tenant['callback'], data=callback_body, timeout=10)
     logging.info(
         'call iam-service-management for OTDS resource application, resp status: %s',
         response.status_code)
