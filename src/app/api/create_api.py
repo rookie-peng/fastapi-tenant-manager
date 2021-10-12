@@ -32,7 +32,7 @@ async def create_order(request: TenantSchema, tenantId: str):
     body = request
     pri_key = tenantId
     res = vars(body)
-    res["tenant_id"] = tenantId
+    res["tenantId"] = tenantId
     logging.info('tenant content: %s', res)
     await crud.post(body, pri_key)
 
@@ -135,8 +135,12 @@ async def on_cms_apply(tenant):
         "emqServerUrl": shared_emq,
     }]
 
-    resp['data'] = resources
-    response = requests.post(tenant['callback'], json=resp, timeout=10)
+    resp['resources'] = resources
+    callback_body = tenant
+    callback_body["resources"] = resources
+    callback_body["status"] = 0
+
+    response = requests.post(tenant['callback'], json=callback_body, timeout=10)
     logging.info(
         'call iam-service-management for CMS resource application, resp status: %s',
         response.status_code)
@@ -199,10 +203,12 @@ async def on_otds_apply(tenant):
         "accessUrl": shared_redis_url,
         "accessKey": shared_redis_key,
     }]
-    resp['data'] = resources
-    print(resp)
+    resp['resources'] = resources
+    callback_body = tenant
+    callback_body["resources"] = resources
+    callback_body["status"] = 0
 
-    response = requests.post(tenant['callback'], json=resp, timeout=10)
+    response = requests.post(tenant['callback'], json=callback_body, timeout=10)
     logging.info(
         'call iam-service-management for OTDS resource application, resp status: %s',
         response.status_code)
