@@ -1,12 +1,16 @@
 import logging
 import requests
+import threading
+
 from typing import List
 from fastapi import APIRouter, HTTPException, Path
 
 # from src.app.api import crud
+# from src.app.api import callback
 # from src.app import settings
 # from src.app.api.models import TenantDB, TenantSchema
 from app.api import crud
+from app.api import callback
 from app import settings
 from app.api.models import TenantDB, TenantSchema
 
@@ -139,12 +143,12 @@ async def on_cms_apply(tenant):
     callback_body = tenant
     callback_body["resources"] = resources
     callback_body["status"] = 0
-    print("---------------------", callback_body)
-
-    response = requests.post(tenant['callback'], data=callback_body, timeout=10)
-    logging.info(
-        'call iam-service-management for CMS resource application, resp status: %s',
-        response.status_code)
+    sub_thread = threading.Thread(target=callback.callback, args=(tenant, callback_body))
+    sub_thread.start()
+    # response = requests.post(tenant['callback'], data=callback_body, timeout=10)
+    # logging.info(
+    #     'call iam-service-management for CMS resource application, resp status: %s',
+    #     response.status_code)
     return resp
 
 
@@ -208,11 +212,11 @@ async def on_otds_apply(tenant):
     callback_body = tenant
     callback_body["resources"] = resources
     callback_body["status"] = 0
-    print("---------------------", callback_body)
-
-    response = requests.post(tenant['callback'], data=callback_body, timeout=10)
-    logging.info(
-        'call iam-service-management for OTDS resource application, resp status: %s',
-        response.status_code)
+    sub_thread = threading.Thread(target=callback.callback, args=(tenant, callback_body))
+    sub_thread.start()
+    # response = requests.post(tenant['callback'], data=callback_body, timeout=10)
+    # logging.info(
+    #     'call iam-service-management for OTDS resource application, resp status: %s',
+    #     response.status_code)
     return resp
 
