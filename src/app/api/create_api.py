@@ -59,6 +59,9 @@ async def on_resource_apply(tenant):
     elif tenant["type"] == 'otds':
         resource = await on_otds_apply(tenant)
         pass
+    elif tenant["type"] == 'iotworks':
+        resource = await on_iotworks_apply(tenant)
+        pass
     else:
         logging.warn('Unsupported Resource Type: %s', tenant["type"])
     return resource
@@ -220,3 +223,110 @@ async def on_otds_apply(tenant):
     #     response.status_code)
     return resp
 
+
+async def on_iotworks_apply(tenant):
+    """
+    handle iotworks resource application
+    """
+    resp = {}
+    resp['tenant'] = tenant
+    # 假设全部成功
+    resp['code'] = 0
+    resp['msg'] = '创建成功'
+    resp['flag'] = True
+    tier = tenant['tier']
+
+    shared_mongo = settings.TENANT_SHARED_RESOURCE_MONGO
+    shared_influx = settings.TENANT_SHARED_RESOURCE_INFLUX
+    shared_hive = settings.TENANT_SHARED_RESOURCE_HIVE
+    shared_redis_url = settings.TENANT_SHARED_RESOURCE_REDIS_URL
+    shared_redis_key = settings.TENANT_SHARED_RESOURCE_REDIS_KEY
+
+    resources = [
+
+        {
+            "mode": "replica",
+            "eachNodeCores": 12,
+            "nodeNum": 3,
+            "eachNodeMemory": 32,
+            "eachNodeDisk": 500,
+            "resourceLevel": "dedicated",
+            "type": "mongo",
+            "version": "4",
+            "initScriptUri": "mongodb://irootech:*********@10.69.82.34:27017,10.69.82.45:27017,10.69.82.23:27017"
+        },
+        {
+         "resourceLevel":"dedicated",
+         "type":"flink",
+         "flinkJobManageAddress":"http://10.70.50.8/v1",
+         "version":"1.12.2"
+         },
+        {
+            "password" : "common_user",
+            "resourceLevel" : "shared",
+            "jdbcUrl" : "jdbc:mysql://10.70.40.144:3307/test_zy?useUnicode=yes&characterEncoding=utf8&useSSL=false&serverTimezone=UTC",
+            "dbType" : "MYSQL_JDBC_URL",
+            "id" : "inner-1231231",
+            "dataSourceDesc" : "",
+            "type" : "mysql",
+            "version" : "5.7.0",
+            "dataSourceName" : "测试内部数据源1",
+            "username" : "common_user"
+        },
+        {
+            "password" : "common_user",
+            "resourceLevel" : "shared",
+            "jdbcUrl" : "jdbc:mysql://10.70.40.144:3307/test_zy?useUnicode=yes&characterEncoding=utf8&useSSL=false&serverTimezone=UTC",
+            "dbType" : "MYSQL_JDBC_URL",
+            "id" : "inner-1231232",
+            "dataSourceDesc" : "",
+            "type" : "mysql",
+            "version" : "5.7.0",
+            "dataSourceName" : "测试内部数据源2",
+            "username" : "common_user"
+        },
+        {
+            "password" : "common_user",
+            "resourceLevel" : "shared",
+            "jdbcUrl" : "jdbc:mysql://10.70.40.144:3307/test_zy?useUnicode=yes&characterEncoding=utf8&useSSL=false&serverTimezone=UTC",
+            "dbType" : "MYSQL_JDBC_URL",
+            "id" : "inner-1231233",
+            "dataSourceDesc" : "",
+            "type" : "mysql",
+            "version" : "5.7.0",
+            "dataSourceName" : "测试内部数据源3",
+            "username" : "common_user"
+        },
+        {
+            "password" : "common_user",
+            "resourceLevel" : "shared",
+            "jdbcUrl" : "jdbc:mysql://10.70.40.144:3307/test_zy?useUnicode=yes&characterEncoding=utf8&useSSL=false&serverTimezone=UTC",
+            "dbType" : "MYSQL_JDBC_URL",
+            "id" : "inner-1231234",
+            "dataSourceDesc" : "",
+            "type" : "mysql",
+            "version" : "5.7.0",
+            "dataSourceName" : "测试内部数据源4",
+            "username" : "common_user"
+        },
+        {
+            "password" : "common_user",
+            "resourceLevel" : "shared",
+            "jdbcUrl" : "jdbc:mysql://10.70.40.144:3307/test_zy?useUnicode=yes&characterEncoding=utf8&useSSL=false&serverTimezone=UTC",
+            "dbType" : "MYSQL_JDBC_URL",
+            "id" : "inner-1231235",
+            "dataSourceDesc" : "",
+            "type" : "mysql",
+            "version" : "5.7.0",
+            "dataSourceName" : "测试内部数据源5",
+            "username" : "common_user"
+        }
+    ]
+    resp['resources'] = resources
+    callback_body = tenant
+    callback_body["resources"] = resources
+    callback_body["status"] = 0
+    sub_thread = threading.Thread(target=callback.callback, args=(tenant, callback_body))
+    sub_thread.start()
+
+    return resp

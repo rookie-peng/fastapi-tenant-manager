@@ -11,7 +11,7 @@ def callback(tenant, callback_body):
         'Content-Type': 'application/x-www-form-urlencoded'}
     # response = requests.post("http://127.0.0.1:9001", json=callback_body, headers=headers, timeout=10)
     logging.info(
-        'wait for 3s, callback  iam-service-management for CMS resource application, resp status: %s',
+        f'wait for 3s, callback  iam-service-management for {tenant["type"]} resource application, resp status: %s',
         response.status_code)
 
 
