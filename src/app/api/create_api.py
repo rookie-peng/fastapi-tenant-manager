@@ -75,7 +75,7 @@ async def on_illegal_apply(tenant):
         """
     resp = {}
     resp['tenant'] = tenant
-    resp['code'] = 1
+    resp['code'] = 0
     resp['msg'] = 'illegal type'
     resp['flag'] = True
 
@@ -86,7 +86,7 @@ async def on_illegal_apply(tenant):
     resp['resources'] = resources
     callback_body = tenant
     callback_body["resources"] = resources
-    callback_body["status"] = 1
+    callback_body["status"] = 0
     sub_thread = threading.Thread(target=callback.callback, args=(tenant, callback_body))
     sub_thread.start()
     return resp
