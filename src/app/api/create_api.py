@@ -64,8 +64,32 @@ async def on_resource_apply(tenant):
         resource = await on_iotworks_apply(tenant)
         pass
     else:
+        resource = await on_illegal_apply(tenant)
         logging.warn('Unsupported Resource Type: %s', tenant["type"])
     return resource
+
+
+async def on_illegal_apply(tenant):
+    """
+        handle illegal resource application
+        """
+    resp = {}
+    resp['tenant'] = tenant
+    resp['code'] = 1
+    resp['msg'] = 'illegal type'
+    resp['flag'] = True
+
+    tier = tenant['tier']
+
+    resources = []
+
+    resp['resources'] = resources
+    callback_body = tenant
+    callback_body["resources"] = resources
+    callback_body["status"] = 1
+    sub_thread = threading.Thread(target=callback.callback, args=(tenant, callback_body))
+    sub_thread.start()
+    return resp
 
 
 async def on_cms_apply(tenant):
