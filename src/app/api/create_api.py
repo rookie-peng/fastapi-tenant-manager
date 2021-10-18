@@ -52,7 +52,8 @@ async def on_resource_apply(tenant):
     """
     Entry point for resource application
     """
-    resource = "type error!"
+    # 不在范围内的返回空列表
+    resource = []
     if tenant["type"] == 'cms':
         resource = await on_cms_apply(tenant)
         pass
